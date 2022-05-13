@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="container">
+    <div class="row">
+        <div class="col">
+            {% for tag in tags %}
+            <article class="post">
+                <h2><a href="{% url 'blog:tag_detail' slug=tag.slug %}">{{ tag.name}}</a></h2>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
