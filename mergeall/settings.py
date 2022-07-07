@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'blog',
     'pollapp',
     'crispy_forms',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 crispy_template_pack ='bootstrap4'
@@ -131,3 +133,14 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 AUTH_USER_MODEL = "blog.User"
 AUTHENTICATION_BACKENDS = ('mergeall.backends.EmailAuthBackend','django.contrib.auth.backends.ModelBackend',)
+
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+    },
+}

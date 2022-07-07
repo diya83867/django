@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from autoslug import AutoSlugField
 from django.contrib.auth.models import AbstractUser, User
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class User(AbstractUser):
     mobile_number = models.IntegerField()
@@ -13,6 +14,7 @@ class User(AbstractUser):
     country = models.CharField(max_length=10,null=True)
     about = models.CharField(max_length=200,null=True)
     image = models.ImageField(upload_to='user_image/',null=True,blank=True)
+    smsMessage = models.TextField(null=True, blank=True)
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -36,6 +38,7 @@ class Post(models.Model):
     author = models.ForeignKey(User ,on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=300)
     description = models.TextField()
+    text = RichTextUploadingField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     thumbnail_image = models.ImageField(upload_to='thumbnail_image', null=True, blank=True)

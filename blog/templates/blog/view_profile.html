@@ -4,7 +4,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <h1> Profile: {{ user.username }}
-        <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'image/user.png' %}{% endif %}" width="150" height="150" />
+    <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'image/user.png' %}{% endif %}" width="150" height="150" />
 </h1>
 <h2>First Name: {{ user.first_name }}</h2>
 <h2>Last Name: {{ user.last_name }}</h2>

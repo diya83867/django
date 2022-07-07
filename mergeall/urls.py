@@ -24,6 +24,8 @@ admin.site.index_title = "Welcome to my Admin Panel."
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('blog.urls')),
     path('pollapp/', include('pollapp.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('', include('blog.urls')),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
