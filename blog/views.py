@@ -2,11 +2,51 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.status import (
+	HTTP_400_BAD_REQUEST,
+	HTTP_404_NOT_FOUND,
+	HTTP_200_OK
+)
+from .seriallizer import *
+from rest_framework.authtoken.models import Token
 from .models import *
 from .form import *
 import csv
 
 # Create your views here.
+
+@csrf_exempt
+@api_view(['GET', 'POST'])
+@permission_classes((AllowAny,))
+def mobileNotificationList(request):
+	tokenkey = request.data.get("tokenKey")
+	try:
+		token = Token.objects.get(key=tokenkey)
+	except:
+		return Response({'error': "Invalid Token Key"},status=HTTP_200_OK)
+	user = token.user
+	notificationList = userNotification.objects.filter(user = user).order_by('-id')
+	notificationListSerialized = userNotificationSerializer(notificationList,many=True)
+	return Response({ 'notificationList' : notificationListSerialized.data},status=HTTP_200_OK)
+
+@csrf_exempt
+@api_view(['GET', 'POST'])
+@permission_classes((AllowAny,))
+def mobileNotificationDetail(request):
+    tokenkey = request.data.get("tokenKey")
+    id = request.data.get("id")
+    try:
+        token = Token.objects.get(key=tokenkey)
+    except:
+        return Response({'error': "Invalid Token Key"},status=HTTP_200_OK)
+    user = token.user
+    notificationList = userNotification.objects.filter(id = id).last()
+    return Response(notificationList.data)
+
 
 def getfile(request):
     response = HttpResponse(content_type='text/csv')

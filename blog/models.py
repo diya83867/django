@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from autoslug import AutoSlugField
+from autoslug.fields import AutoSlugField
 from django.contrib.auth.models import AbstractUser, User
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -67,3 +67,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+
+class userNotification(models.Model):
+	user = models.ForeignKey(User,related_name='studentNT',on_delete=models.CASCADE)
+	title = models.TextField(null=True, blank=True)
+	message = models.TextField(null=True, blank=True)
+	image = models.FileField(upload_to ='Notification/',null=True, blank=True)
+	timestamp = models.DateTimeField(auto_now_add=True, editable=False)
+	utimestamp = models.DateTimeField(auto_now=True, editable=False)
+
+	class Meta:
+		verbose_name_plural = 'Mobile-Notifications'
+
+	def __str__(self):
+		return self.user.username +"-"+self.title or '--Title not provided--'
+

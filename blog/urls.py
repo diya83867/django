@@ -19,6 +19,9 @@ urlpatterns = [
     path("profile/", views.view_profile, name="view_profile"), 
     path("edit/", views.edit_profile, name="edit_profile"),
     path('csv/',views.getfile),
+    path('notification-mobile-list/',views.mobileNotificationList, name='mobileNotificationList'),
+    path('notification-mobile-detail/',views.mobileNotificationDetail, name='mobileNotificationDetail'),
+
 
     path('', views.post_list, name='post_list'),
 ]
