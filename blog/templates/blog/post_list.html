@@ -9,9 +9,9 @@
             <time class="date" style="color: #8f0606;">
                 {{ post.published_date }}
             </time>
-            <article class="post">
+            <article class="post mt-2">
                 category:<a href="{% url 'blog:category_detail' post.category.slug %}">{{ post.category.name }}</a>
-                <h2>
+                <h2 class="mt-2">
                     <a href="{% url 'blog:post_detail' post.slug %}">
                         <img class='img'
                             src="{% if post.thumbnail_image %} {{post.thumbnail_image.url }} {% else %}{% static 'image/static.png' %} {% endif %}"
@@ -19,7 +19,7 @@
                         {{ post.title|truncatechars:30}}
                     </a>
                 </h2>
-                <p>{{ post.description|linebreaksbr|truncatechars:50}}</p>
+                {% comment %} <p>{{ post.description|linebreaksbr|truncatechars:50}}</p> {% endcomment %}
                 {% comment %} <p>By: {{ post.author|linebreaksbr|truncatechars:50}}</p> {% endcomment %}
                 tag: {% for i in post.tag.all %} <a href="{% url 'blog:tag_detail' i.slug %}">{{ i.name | linebreaksbr}}</a> {% endfor %}
             </article>

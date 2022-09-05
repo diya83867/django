@@ -82,3 +82,24 @@ class userNotification(models.Model):
 	def __str__(self):
 		return self.user.username +"-"+self.title or '--Title not provided--'
 
+class m2mUpdate(models.Model):
+    title = models.TextField(null=True, blank=True)
+    m2m = models.ManyToManyField(Tag, blank=True)
+    number = models.IntegerField()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'm2m-update'
+
+    # def save(self):
+    #     if self.id:
+    #         data = m2mUpdate.objects.filter(id=self.id)
+    #         tag = Tag.objects.filter(id__in=list(set(data.values_list('m2m', flat=True)))).all()
+    #         d1 = m2mUpdate.objects.get(id=self.id)
+    #         d1.m2m.clear()
+    #     super(m2mUpdate,self).save()
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)

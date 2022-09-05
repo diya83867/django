@@ -32,8 +32,8 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'mail', 'company', 'state', 'country')
 
 class PostAdmin(admin.ModelAdmin):
-    search_fields = ('title', 'description')
-    list_display = ('title', 'description', 'created_date', 'published_date')
+    search_fields = ('title', 'category')
+    list_display = ('title', 'category', 'created_date', 'published_date')
     list_filter = ['published_date', 'created_date']
     filter_horizontal = ('tag',)
 
@@ -56,3 +56,8 @@ admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(userNotification)
+
+class m2mUpdateAdmin(admin.ModelAdmin):
+    filter_horizontal = ('m2m',)
+
+admin.site.register(m2mUpdate, m2mUpdateAdmin)

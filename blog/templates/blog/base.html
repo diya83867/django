@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <header class="page-header">
+    <header class="page-header fixed-top">
         <div class="container">
             {% if user.is_authenticated %}
             <a href="{% url 'blog:post_new' %}" class="top-menu">
@@ -26,7 +26,14 @@
             <a style="text-decoration: none; padding: 20px; font-weight: bold; font-size: 30px;"
                 href="/category/">Category</a>
             <a style="text-decoration: none; padding: 20px; font-weight: bold; font-size: 30px;" href="/tag/">Tag</a>
-            {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+            <a style="text-decoration: none; padding: 20px; font-weight: bold; font-size: 30px;"
+                href="/admin/">Admin</a>
+            <a style="text-decoration: none; padding: 20px; font-weight: bold; font-size: 30px;"
+                href="/profile/">Profile</a>
+            <a style="text-decoration: none; padding: 20px; font-weight: bold; font-size: 30px;"
+                href="/logout/">Logout</a>
+            {% elif user.is_authenticated %}
             <a style="text-decoration: none; padding: 20px; font-weight: bold; font-size: 30px;"
                 href="/profile/">Profile</a>
             <a style="text-decoration: none; padding: 20px; font-weight: bold; font-size: 30px;"
@@ -39,7 +46,7 @@
             {% endif %}
         </div>
     </header>
-    <main class="content container">
+    <main class="content container" style="margin-top: 110px;">
         <div class="row">
             <div class="col">
                 {% block content %}
