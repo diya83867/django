@@ -186,4 +186,4 @@ def post_edit(request, slug):
             return redirect('blog:post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form, 'post':post})

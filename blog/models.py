@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from autoslug.fields import AutoSlugField
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser
 from ckeditor_uploader.fields import RichTextUploadingField
 
 class User(AbstractUser):
