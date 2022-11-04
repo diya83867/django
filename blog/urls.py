@@ -11,6 +11,7 @@ urlpatterns = [
     path('category/<slug:slug>/', views.category_detail, name='category_detail'),
     path('tag/<slug:slug>/', views.tag_detail, name='tag_detail'),
 
+    path("loop/", views.loop, name="loop"),
     path("register/", views.register, name="register"),
     path('login/', views.loginUser, name='login'),
     path('logout/', views.logoutUser, name='logout'),

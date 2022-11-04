@@ -159,6 +159,13 @@ def tag_detail(request, slug):
     post = Post.objects.filter(tag=tags)
     return render(request, 'blog/tag_detail.html', {'posts': post})
 
+def loop(request):
+    a = []
+    for i in range(26):
+        if i != 0:
+            a.append(i)
+    return render(request, 'blog/loop.html', {"a":a})
+
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
