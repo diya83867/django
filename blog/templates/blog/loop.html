@@ -9,12 +9,16 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container"> 
+    <div class="container">
         <div class="row">
-            {% for i in a %}
-            <div class="col-3">
-                {{i}}
+            {% for article in a %}
+            <div class="col-4">
+                {{ article }}
             </div>
+            {% if forloop.counter|divisibleby:3 %}
+            </div>
+            <div class="row">
+            {% endif %}
             {% endfor %}
         </div>
     </div>
