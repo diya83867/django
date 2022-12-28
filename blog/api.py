@@ -38,7 +38,6 @@ class ListUserViewSet(viewsets.ModelViewSet):
     """
     Provides a get method handler.
     """       
-    permission_classes = ((AllowAny,))
     queryset = User.objects.all()
     serializer_class = UserSerializer
     http_method_names= ["get", "put", "delete", "patch", "post"]
