@@ -29,6 +29,7 @@ class ListCategoryViewSet(viewsets.ModelViewSet):
     """
     Provides a get method handler.
     """       
+    permission_classes = ((AllowAny,))
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     http_method_names= ["get", "put", "delete", "patch", "post"]
@@ -37,6 +38,7 @@ class ListUserViewSet(viewsets.ModelViewSet):
     """
     Provides a get method handler.
     """       
+    permission_classes = ((AllowAny,))
     queryset = User.objects.all()
     serializer_class = UserSerializer
     http_method_names= ["get", "put", "delete", "patch", "post"]
@@ -45,6 +47,7 @@ class ListTagViewSet(viewsets.ModelViewSet):
     """
     Provides a get method handler.
     """       
+    permission_classes = ((AllowAny,))
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     http_method_names= ["get", "put", "delete", "patch", "post"]
