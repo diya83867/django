@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-=q#ua3*hqxf&h-zp66x)j_o7@b4621=w%2abp5z23lfcyiy33^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -55,6 +56,9 @@ REST_FRAMEWORK = {
 crispy_template_pack ='bootstrap4'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -156,3 +160,4 @@ CKEDITOR_CONFIGS = {
         'toolbar': None,
     },
 }
+CORS_ORIGIN_ALLOW_ALL = True

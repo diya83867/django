@@ -6,13 +6,13 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from rest_framework.status import (
 	HTTP_400_BAD_REQUEST,
 	HTTP_404_NOT_FOUND,
 	HTTP_200_OK
 )
 from .seriallizer import *
-from rest_framework.authtoken.models import Token
 from .models import *
 from .form import *
 import csv
@@ -193,4 +193,4 @@ def post_edit(request, slug):
             return redirect('blog:post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form, 'post':post})
+    return render(request, 'blog/post_ed    it.html', {'form': form, 'post':post})
