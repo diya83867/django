@@ -1,4 +1,4 @@
-# Lifeideology
+# Blog Project
 
 ## Create Virtualenv with Python3 in Linux, Ubuntu or MAC
 	virtualenv blogenv -p python3
