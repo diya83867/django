@@ -100,7 +100,7 @@ def loginUser(request):
                 user = authenticate(username = the_user.username, password = password)
                 if user.is_active:
                     login(request, user)
-                    return redirect("/")
+                return redirect("/")
     form = LoginForm()
     context = {'form': form, 'title': "Login"}
     return render(request, "blog/login.html", context)
