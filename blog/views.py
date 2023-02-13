@@ -47,7 +47,6 @@ def mobileNotificationDetail(request):
     notificationList = userNotification.objects.filter(id = id).last()
     return Response(notificationList.data)
 
-
 def getfile(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="file.csv"'
