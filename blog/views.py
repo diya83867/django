@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+import http
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.utils import timezone
@@ -12,12 +13,37 @@ from rest_framework.status import (
 	HTTP_404_NOT_FOUND,
 	HTTP_200_OK
 )
+from oauth2client.contrib.django_util.storage import DjangoORMStorage
+from oauth2client.client import flow_from_clientsecrets
+from apiclient.discovery import build
+import httplib2
+from django.conf import settings
 from .seriallizer import *
 from .models import *
 from .form import *
 import csv
+from oauth2client.contrib import xsrfutil
 
 # Create your views here.
+
+FLOW = flow_from_clientsecrets(
+    settings.GOOGLE_OAUTH2_CLIENT_SECRETS_JSON,
+    scope='https://www.googleapis.com/auth/gmail.readonly',
+    redirect_uri='http://127.0.0.1:8000/oauth2callback',
+    prompt='consent')
+
+def auth_return(request):
+    get_state = bytes(request.GET.get('state'), 'utf8')
+    if not xsrfutil.validate_token(settings.SECRET_KEY, get_state,
+                                   request.user):
+        return HttpResponseBadRequest()
+  
+    credential = FLOW.step2_exchange(request.GET.get('code'))
+    storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
+    storage.put(credential)
+  
+    print("access_token: % s" % credential.access_token)
+    return HttpResponseRedirect("/")
 
 @csrf_exempt
 @api_view(['GET', 'POST'])
@@ -109,9 +135,15 @@ def logoutUser(request):
     return redirect("/")
 
 def post_list(request):
-    posts = Post.objects.filter(
-        published_date__lte=timezone.now()).order_by("published_date")
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    if request.user.is_authenticated:
+        # if request.user.is_superuser:
+            posts = Post.objects.filter(
+                published_date__lte=timezone.now()).order_by("published_date")
+            return render(request, 'blog/post_list.html', {'posts': posts})
+        # else:
+        #     return HttpResponse("You are not authorized to access this page.")
+    else:
+        return redirect('blog:login')
 
 def post_detail(request, slug):
     posts = get_object_or_404(Post, slug=slug)
@@ -192,4 +224,4 @@ def post_edit(request, slug):
             return redirect('blog:post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_ed    it.html', {'form': form, 'post':post})
+    return render(request, 'blog/post_edit.html', {'form': form, 'post':post})

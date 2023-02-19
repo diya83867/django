@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from django.contrib.messages import constants as messages
+# from oauth2client.client import flow_from_clientsecrets
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=q#ua3*hqxf&h-zp66x)j_o7@b4621=w%2abp5z23lfcyiy33^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -34,6 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # must
+    'allauth', # must
+    'allauth.account', # must
+    'allauth.socialaccount', # must
+    'allauth.socialaccount.providers.google', # new
     'blog',
     'pollapp',
     'crispy_forms',
@@ -148,7 +154,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 AUTH_USER_MODEL = "blog.User"
-AUTHENTICATION_BACKENDS = ('mergeall.backends.EmailAuthBackend','django.contrib.auth.backends.ModelBackend',)
+AUTHENTICATION_BACKENDS = ('mergeall.backends.EmailAuthBackend','django.contrib.auth.backends.ModelBackend','allauth.account.auth_backends.AuthenticationBackend')
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+LOGIN_REDIRECT_URL = '/'
 
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
@@ -161,3 +169,13 @@ CKEDITOR_CONFIGS = {
     },
 }
 CORS_ORIGIN_ALLOW_ALL = True
+
+SITE_ID = 1
+# REST_USE_JWT = True 
+# FLOW = flow_from_clientsecrets(
+#     settings.GOOGLE_OAUTH2_CLIENT_SECRETS_JSON,
+#     scope='https://www.googleapis.com/auth/gmail.readonly',
+#     redirect_uri='http://127.0.0.1:8000/oauth2callback',
+#     prompt='consent')
+
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'

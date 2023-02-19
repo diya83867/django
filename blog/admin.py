@@ -15,7 +15,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 class UserAdmin(admin.ModelAdmin):
     actions = ["export_as_csv"]
-    list_display = ('username', 'email', 'mail')
+    list_display = ('username', 'email', 'mail', 'is_superuser')
 
     def export_as_csv(self, request, queryset):
         meta = self.model._meta

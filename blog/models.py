@@ -2,19 +2,30 @@ from django.db import models
 from django.utils import timezone
 from autoslug.fields import AutoSlugField
 from django.contrib.auth.models import AbstractUser
+from django.contrib import admin
 from ckeditor_uploader.fields import RichTextUploadingField
+from oauth2client.contrib.django_util.models import CredentialsField
 
 class User(AbstractUser):
-    mobile_number = models.IntegerField()
+    mobile_number = models.IntegerField(null=True, blank=True)
     email = models.EmailField(null=True,blank=True)
-    mail = models.EmailField()
-    company = models.CharField(max_length=50,null=True)
-    designation = models.CharField(max_length=50,null=True)
-    state = models.CharField(max_length=10,null = True)
-    country = models.CharField(max_length=10,null=True)
-    about = models.CharField(max_length=200,null=True)
+    mail = models.EmailField(null=True, blank=True)
+    company = models.CharField(max_length=50,null=True, blank=True)
+    designation = models.CharField(max_length=50,null=True, blank=True)
+    state = models.CharField(max_length=10,null = True, blank=True)
+    country = models.CharField(max_length=10,null=True,blank=True)
+    about = models.CharField(max_length=200,null=True,blank=True)
     image = models.ImageField(upload_to='user_image/',null=True,blank=True)
     smsMessage = models.TextField(null=True, blank=True)
+
+class CredentialsModel(models.Model):
+    id = models.OneToOneField(User, primary_key = True, on_delete = models.CASCADE)
+    credential = CredentialsField()
+    task = models.CharField(max_length = 80, null = True)
+    updated_time = models.CharField(max_length = 80, null = True)
+
+class CredentialsAdmin(admin.ModelAdmin):
+    pass
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
