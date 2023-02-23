@@ -157,6 +157,8 @@ AUTH_USER_MODEL = "blog.User"
 AUTHENTICATION_BACKENDS = ('mergeall.backends.EmailAuthBackend','django.contrib.auth.backends.ModelBackend','allauth.account.auth_backends.AuthenticationBackend')
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'blog:login'
+LOGOUT_URL = 'blog:logout'
 
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 

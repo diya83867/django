@@ -15,7 +15,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 class UserAdmin(admin.ModelAdmin):
     actions = ["export_as_csv"]
-    list_display = ('username', 'email', 'mail', 'is_superuser')
+    list_display = ('username', 'email', 'is_superuser')
 
     def export_as_csv(self, request, queryset):
         meta = self.model._meta
@@ -28,13 +28,13 @@ class UserAdmin(admin.ModelAdmin):
             row = writer.writerow([getattr(obj, field) for field in field_names])
         return response
 
-    list_filter = ('mail', 'company', 'state', 'country')
-    search_fields = ('first_name', 'last_name', 'mail', 'company', 'state', 'country')
+    list_filter = ('company', 'state', 'country')
+    search_fields = ('first_name', 'last_name', 'company', 'state', 'country')
 
 class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'category')
-    list_display = ('title', 'category', 'created_date', 'published_date')
-    list_filter = ['published_date', 'created_date']
+    list_display = ('title', 'category', 'created', 'publish')
+    list_filter = ['publish', 'created']
     filter_horizontal = ('tag',)
 
     def view_on_site(self, obj):
@@ -42,22 +42,16 @@ class PostAdmin(admin.ModelAdmin):
         return url
 
 class CategoryAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'description')
-    list_display = ('name', 'description')
-    list_filter = ['name', 'description']
+    search_fields = ['name']
+    list_display = ['name']
+    list_filter = ['name']
 
 class TagAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'description')
-    list_display = ('name', 'description')
-    list_filter = ['name', 'description']
+    search_fields = ['name']
+    list_display = ['name']
+    list_filter = ['name']
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)
-admin.site.register(userNotification)
-
-class m2mUpdateAdmin(admin.ModelAdmin):
-    filter_horizontal = ('m2m',)
-
-admin.site.register(m2mUpdate, m2mUpdateAdmin)

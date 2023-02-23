@@ -7,14 +7,14 @@
         <div class="col">
             {% for post in posts %}
             <time class="date" style="color: #8f0606;">
-                {{ post.published_date }}
+                {{ post.publish }}
             </time>
             <article class="post mt-2">
                 category:<a href="{% url 'blog:category_detail' post.category.slug %}">{{ post.category.name }}</a>
                 <h2 class="mt-2">
                     <a href="{% url 'blog:post_detail' post.slug %}">
                         <img class='img'
-                            src="{% if post.thumbnail_image %} {{post.thumbnail_image.url }} {% else %}{% static 'image/static.png' %} {% endif %}"
+                            src="{% if post.thumbnail %} {{post.thumbnail.url }} {% else %}{% static 'image/static.png' %} {% endif %}"
                             style="width:50px; height:50px; border-radius: 50px;">
                         {{ post.title|truncatechars:30}}
                     </a>

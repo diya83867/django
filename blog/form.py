@@ -6,17 +6,17 @@ from .models import *
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('author','title', 'text', 'thumbnail_image', 'feature_image','category','tag')
+        fields = ('author','title', 'text', 'thumbnail', 'featured','category','tag')
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username','first_name', 'last_name', 'mobile_number', 'mail','company','designation','state','country','about','image')
+        fields = ('username','first_name', 'last_name', 'number', 'email','company','designation','state','country','about','image')
 
 class User_Update(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username','first_name', 'last_name','mobile_number','mail','company','designation','state','country','about','image')
+        fields = ('username','first_name', 'last_name','number','email','company','designation','state','country','about','image')
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -31,7 +31,7 @@ class CategoryForm(forms.ModelForm):
 class TagForm(forms.ModelForm):
     class Meta:
         model = Tag
-        fields = ('name', 'description', 'tag_image')
+        fields = ('name', 'description', 'image')
 
 class LoginForm(forms.Form):
     mail = forms.CharField(label='username or mail')

@@ -23,6 +23,5 @@ urlpatterns = [
     path('notification-mobile-list/',views.mobileNotificationList, name='mobileNotificationList'),
     path('notification-mobile-detail/',views.mobileNotificationDetail, name='mobileNotificationDetail'),
 
-
     path('', views.post_list, name='post_list'),
 ]

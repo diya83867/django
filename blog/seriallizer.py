@@ -1,11 +1,5 @@
 from rest_framework import serializers
 from .models import *
-import random
-
-class userNotificationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = userNotification
-        fields = "__all__"
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:

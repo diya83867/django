@@ -2,6 +2,7 @@ import http
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
@@ -13,9 +14,6 @@ from rest_framework.status import (
 	HTTP_404_NOT_FOUND,
 	HTTP_200_OK
 )
-from oauth2client.contrib.django_util.storage import DjangoORMStorage
-from oauth2client.client import flow_from_clientsecrets
-from apiclient.discovery import build
 import httplib2
 from django.conf import settings
 from .seriallizer import *
@@ -25,25 +23,6 @@ import csv
 from oauth2client.contrib import xsrfutil
 
 # Create your views here.
-
-FLOW = flow_from_clientsecrets(
-    settings.GOOGLE_OAUTH2_CLIENT_SECRETS_JSON,
-    scope='https://www.googleapis.com/auth/gmail.readonly',
-    redirect_uri='http://127.0.0.1:8000/oauth2callback',
-    prompt='consent')
-
-def auth_return(request):
-    get_state = bytes(request.GET.get('state'), 'utf8')
-    if not xsrfutil.validate_token(settings.SECRET_KEY, get_state,
-                                   request.user):
-        return HttpResponseBadRequest()
-  
-    credential = FLOW.step2_exchange(request.GET.get('code'))
-    storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
-    storage.put(credential)
-  
-    print("access_token: % s" % credential.access_token)
-    return HttpResponseRedirect("/")
 
 @csrf_exempt
 @api_view(['GET', 'POST'])
@@ -111,39 +90,31 @@ def register(request):
 
 def loginUser(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            mail = form.cleaned_data['mail']
-            password = form.cleaned_data['password']
-            try:
-                the_user = User.objects.get(username=mail)
-            except User.DoesNotExist:
-                the_user = User.objects.get(mail=mail)
-            except:
-                the_user = None
-            if the_user is not None:    
-                user = authenticate(username = the_user.username, password = password)
-                if user.is_active:
-                    login(request, user)
-                return redirect("/")
-    form = LoginForm()
-    context = {'form': form, 'title': "Login"}
-    return render(request, "blog/login.html", context)
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = User.objects.get(email=username)
+        except:
+            user = None
+        if user is not None:    
+            user = authenticate(username=user.username, password=password)
+            if user.is_active:
+                login(request, user)
+                return redirect("blog:post_list")
+        else:
+            return HttpResponse("error")
+    return render(request, "blog/login.html")
 
 def logoutUser(request):
     logout(request)
     return redirect("/")
 
+@login_required
 def post_list(request):
-    if request.user.is_authenticated:
-        # if request.user.is_superuser:
-            posts = Post.objects.filter(
-                published_date__lte=timezone.now()).order_by("published_date")
-            return render(request, 'blog/post_list.html', {'posts': posts})
-        # else:
-        #     return HttpResponse("You are not authorized to access this page.")
-    else:
-        return redirect('blog:login')
+    posts = Post.objects.filter(publish__lte=timezone.now()).order_by("publish")
+    return render(request, 'blog/post_list.html', {'posts': posts})
 
 def post_detail(request, slug):
     posts = get_object_or_404(Post, slug=slug)
@@ -154,7 +125,6 @@ def post_detail(request, slug):
             reply_obj = None
             reply_id = None
             reply_id = request.POST.get('reply_id')
-            print(reply_id)
             if reply_id:
                 reply_obj = Comment.objects.filter(id=reply_id).last()
             if reply_id:
