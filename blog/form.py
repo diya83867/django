@@ -4,9 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
 class PostForm(forms.ModelForm):
-    class Meta:
+    class Meta():
         model = Post
-        fields = ('author','title', 'text', 'thumbnail', 'featured','category','tag')
+        fields = ('title', 'text', 'thumbnail', 'featured','category','tag')
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:

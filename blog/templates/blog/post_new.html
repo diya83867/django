@@ -2,81 +2,81 @@
 {% load static %}
 
 {% block content %}
-<div class="content-wrapper" style="margin-top: -17px;">
-    <div class="container-fluid text-center">
-        <div class="container">
-            <div class="row my-auto" style="background-color: #8c8587;">
-                <div class="col-md-12 h3" style="color: floralwhite;"> Create a New Post </div>
-            </div>
-            <form method="POST" avtion="/" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
-                    <div class="col-12 col-sm-4  pl-2">
-                        <label for="" class=""> Select the Author : </label>
-                    </div>
-                    <select name="" id="" class="custom-select col-12 col-sm-8" style="width: 50%;" required>
-                        <div class="d-block">
-                            {% for item in form.author %}
-                            {{item}}
-                            {% endfor %}
-                        </div>
-                    </select>
-                </div>
-                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
-                    <div class="col-12 col-sm-4 pl-2">
-                        <label for="" class=""> Title of Post : </label>
-                    </div>
-                    <input type="text" name="postName" class="form-control col-12 col-sm-8 p-0" style="width: 50%;" required>
-                </div>
-                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
-                    <div class="col-12 col-sm-4  pl-2">
-                        <label for="" class=""> Description for Post : </label>
-                    </div>
-                    <textarea type="text" name="postDesc" class="form-control col-12 col-sm-8 py-auto "
-                        style="width: 50%;" required></textarea>
-                </div>
-                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
-                    <div class="col-12 col-sm-4  pl-2">
-                        <label for="id_suppDoc" class=""> Select Thumbnail image : </label>
-                    </div>
-                    <input type="file" class="custom-file-input form-control" id="id_suppDoc" name="suppDoc" style="width: 50%;">
-                </div>
-                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
-                    <div class="col-12 col-sm-4  pl-2">
-                        <label for="id_suppDoc" class=""> Select Feature image : </label>
-                    </div>
-                    <input type="file" class="custom-file-input form-control" id="id_suppDoc" name="suppDoc" style="width: 50%;">
-                </div>
-                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
-                    <div class="col-12 col-sm-4  pl-2">
-                        <label for="" class=""> Select Category for Post : </label>
-                    </div>
-                    <select name="" id="" class="custom-select col-12 col-sm-8" style="width: 50%;" required>
-                        <div class="d-block">
+<div class="container">
+	<header class="header">
+		<h1 id="title" class="text-center">Create a Post</h1>
+	</header>
+	<div class="form-wrap">	
+		<form id="survey-form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label id="name-label" for="title">Title *</label>
+						<input type="text" name="title" id="title" placeholder="Enter your title" class="form-control" value="{% if form.title.value %}{{form.title.value}}{% endif %}" required>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label id="number-label" for="desc">Description *</label>
+						<textarea type="text" name="desc" id="desc" class="form-control" placeholder="Enter your Description" >{% if form.text.value %}{{form.text.value}}{% endif %}</textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label id="number-label" for="thumbnail">Thumbnail Image *</label>
+						<input type="file" name="thumbnail" id="thumbnail" class="form-control" value="{% if form.thumbnail.value %}{{form.thumbnail.value}}{% endif %}">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label id="number-label" for="feature">Feature Image *</label>
+						<input type="file" name="feature" id="feature" class="form-control" value="{% if form.featured.value %}{{form.featured.value}}{% endif %}">
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="dropdown" name="category" class="form-control" value="{% if form.category.value %}{{form.category.value}}{% endif %}" required>
                             {% for item in form.category %}
                             {{item}}
                             {% endfor %}
-                        </div>
-                    </select>
-                </div>
-                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
-                    <div class="col-12 col-sm-4  pl-2">
-                        <label for="" class=""> Select Tags for Post : </label>
+                        </select>
                     </div>
-                    <select name="" id="" class="custom-select col-12 col-sm-8" style="width: 50%;" multiple>
-                        <div class="d-block">
-                            {% for item in form.tag %}
-                            {{item}}
-                            {% endfor %}
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Tag</label>
+                        {% for item in tagList %}
+                        <div class="form-check ">
+                            <input class="form-check-input" name="tag" type="checkbox" value="{{item.id}}" id="tag" {% if form.tag.value %}{% if item.id in form.tag.value %}checked{% endif %}{% endif %}>
+                            <label class="form-check-label" for="tag"> {{item.name }} </label>
                         </div>
-                    </select>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="col-md-12 align-self-center mx-auto mt-3">
-                    <button type="submit"
-                        class="btn-light py-2 px-5" style="font-size: larger; border: 2px solid black; border-radius: 12px; background-color:blue; color:white;">
-                         Submit</button>
+			</div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" id="submit" class="btn btn-primary btn-block">Save Post</button>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
+			
+
+		</form>
+	</div>	
 </div>
 {% endblock %}

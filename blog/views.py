@@ -154,18 +154,22 @@ def loop(request):
     return render(request, 'blog/loop.html', {"a":a})
 
 def addPost(request):
+    form = PostForm()
+    tagList = Tag.objects.all()
     if request.method == "POST":
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            form.save_m2m()
-            return redirect('blog:post_detail', slug=post.slug)
-    else:
-        form = PostForm()
-    return render(request, 'blog/post_new.html', {'form': form})
+        title = request.POST['title']
+        desc = request.POST['desc']
+        thumbnail = request.FILES['thumbnail']
+        feature = request.FILES['feature']
+        category = request.POST['category']
+        tag = request.POST.getlist('tag')
+        post = Post(author=request.user,title=title,text=desc,thumbnail=thumbnail,featured=feature,category=Category.objects.get(id=category))
+        post.save()
+        for i in tag:
+            post.tag.add(Tag.objects.get(id=i))
+        messages.success(request, "Post created successfully.")
+        return redirect('blog:post_detail', slug=post.slug)
+    return render(request, 'blog/post_new.html', {'form': form, 'tagList':tagList})
 
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)

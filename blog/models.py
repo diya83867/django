@@ -25,7 +25,7 @@ class Category(models.Model):
     publish = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.name + " - " + self.description
+        return self.name
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
@@ -36,7 +36,7 @@ class Tag(models.Model):
     publish = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.name + "-" + self.description
+        return self.name
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT)

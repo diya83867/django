@@ -76,8 +76,8 @@
                 </ul>
                 <div class="d-lg-flex col-lg-3 justify-content-lg-end">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'blog:post_new' %}" class="top-menu">
-                            {% include 'icons/file-earmark-plus.svg' %}
+                        <a href="{% url 'blog:addPost' %}" class="top-menu rounded text-white bg-success text-decoration-none p-2">
+                            {% include 'icons/file-earmark-plus.svg' %} Add Post
                         </a>
                     {% endif %}
                 </div>
