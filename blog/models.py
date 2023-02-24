@@ -6,12 +6,13 @@ from autoslug.fields import AutoSlugField
 from ckeditor_uploader.fields import RichTextUploadingField
 
 class User(AbstractUser):
+    parent = models.ForeignKey("self", verbose_name="Parent", on_delete=models.PROTECT, blank=True, null=True)  
     number = models.IntegerField(validators=[MinValueValidator(5000000000),MaxValueValidator(999999999999)], default=5000000000)
     company = models.CharField(max_length=50)
-    designation = models.CharField(max_length=50)
-    state = models.CharField(max_length=20)
-    country = models.CharField(max_length=10)
-    email = models.EmailField(max_length=20)
+    designation = models.CharField(max_length=100)
+    state = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
     about = models.TextField(max_length=300)
     image = models.ImageField(upload_to='user_image')
 

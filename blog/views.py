@@ -2,6 +2,7 @@ import http
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -20,37 +21,48 @@ from .seriallizer import *
 from .models import *
 from .form import *
 import csv
-from oauth2client.contrib import xsrfutil
 
-# Create your views here.
+def register(request):
+    if request.method == 'POST':
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
+        username = request.POST["username"]
+        password = request.POST["password"]
+        designation = request.POST["designation"]
+        company = request.POST["company"]
+        email = request.POST["email"]
+        image = request.FILES["image"]
+        about = request.POST["about"]
+        state = request.POST["state"]
+        country = request.POST["country"]
+        if User.objects.filter(username=username).exists():
+            messages.warning(request, 'This account is already exists.')
+        else:
+            user = User.objects.create_user(username=username,email=email,password=password,first_name=first_name,last_name=last_name,designation=designation,image=image,about=about,state=state,country=country,company=company)
+            user = authenticate(username=user.username, password=password)
+            login(request, user)
+            messages.success(request, 'User created Successfully.')
+            return redirect("blog:post_list")
+    return render(request, 'blog/register.html')     
 
-@csrf_exempt
-@api_view(['GET', 'POST'])
-@permission_classes((AllowAny,))
-def mobileNotificationList(request):
-	tokenkey = request.data.get("tokenKey")
-	try:
-		token = Token.objects.get(key=tokenkey)
-	except:
-		return Response({'error': "Invalid Token Key"},status=HTTP_200_OK)
-	user = token.user
-	notificationList = userNotification.objects.filter(user = user).order_by('-id')
-	notificationListSerialized = userNotificationSerializer(notificationList,many=True)
-	return Response({ 'notificationList' : notificationListSerialized.data},status=HTTP_200_OK)
-
-@csrf_exempt
-@api_view(['GET', 'POST'])
-@permission_classes((AllowAny,))
-def mobileNotificationDetail(request):
-    tokenkey = request.data.get("tokenKey")
-    id = request.data.get("id")
-    try:
-        token = Token.objects.get(key=tokenkey)
-    except:
-        return Response({'error': "Invalid Token Key"},status=HTTP_200_OK)
-    user = token.user
-    notificationList = userNotification.objects.filter(id = id).last()
-    return Response(notificationList.data)
+def loginUser(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = User.objects.get(email=username)
+        except:
+            user = None
+        if user is not None:    
+            user = authenticate(username=user.username, password=password)
+            if user.is_active:
+                login(request, user)
+                return redirect("blog:post_list")
+        else:
+            return HttpResponse("error")
+    return render(request, "blog/login.html")
 
 def getfile(request):
     response = HttpResponse(content_type='text/csv')
@@ -77,44 +89,18 @@ def edit_profile(request):
         form = User_Update(instance=request.user)
     return render(request, 'blog/edit_profile.html', {'form': form})
 
-def register(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/login/')
-    else:
-        form = UserRegistrationForm()
-    context = {'form': form}
-    return render(request, 'blog/register.html', context)
-
-def loginUser(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            user = User.objects.get(email=username)
-        except:
-            user = None
-        if user is not None:    
-            user = authenticate(username=user.username, password=password)
-            if user.is_active:
-                login(request, user)
-                return redirect("blog:post_list")
-        else:
-            return HttpResponse("error")
-    return render(request, "blog/login.html")
 
 def logoutUser(request):
     logout(request)
     return redirect("/")
 
-@login_required
 def post_list(request):
-    posts = Post.objects.filter(publish__lte=timezone.now()).order_by("publish")
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    if request.user.is_authenticated:
+        posts = Post.objects.filter(publish__lte=timezone.now(), author=request.user).order_by("-id")
+        return render(request, 'blog/post_list.html', {'posts': posts})
+    else:
+        posts = Post.objects.filter(publish__lte=timezone.now()).order_by("?")[:10]
+        return render(request, 'blog/post_list.html', {'posts': posts})
 
 def post_detail(request, slug):
     posts = get_object_or_404(Post, slug=slug)
@@ -167,7 +153,7 @@ def loop(request):
             a.append(i)
     return render(request, 'blog/loop.html', {"a":a})
 
-def post_new(request):
+def addPost(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():

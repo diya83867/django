@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.http import HttpResponse
 from django.urls import reverse
 from .models import *
@@ -13,7 +14,7 @@ class CommentAdmin(admin.ModelAdmin):
     def approve_comments(self, request, queryset):
         queryset.update(active=True)
 
-class UserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     actions = ["export_as_csv"]
     list_display = ('username', 'email', 'is_superuser')
 
@@ -51,7 +52,7 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ['name']
     list_filter = ['name']
 
-admin.site.register(User, UserAdmin)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)

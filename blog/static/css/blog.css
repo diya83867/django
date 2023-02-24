@@ -21,6 +21,22 @@ height: calc(100% - 73px);
 height: 100%;
 }
 }
-.login-form input {
+.login-form input, .signup-form input {
     font-size: 1rem;
+}
+.login-form .btn-lg {
+    padding-left: 2.5rem; 
+    padding-right: 2.5rem;
+}
+.signup-form {
+    background-color: #8fc4b7;
+}
+.card-registration {
+    margin-bottom: 11px;
+}
+.card-registration img {
+    border-top-left-radius: .25rem; 
+    border-bottom-left-radius: .25rem; 
+    height:90vh; 
+    width:95%
 }
