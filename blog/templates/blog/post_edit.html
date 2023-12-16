@@ -1,0 +1,89 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper" style="margin-top: -17px;">
+    <div class="container-fluid text-center">
+        <div class="container">
+            <div class="row my-auto" style="background-color: #8c8587;">
+                <div class="col-md-12 h3" style="color: floralwhite;"> Edit Post </div>
+            </div>
+            <form method="POST" action="/" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
+                    <div class="col-12 col-sm-4  pl-2">
+                        <label for="" class=""> Select the Author : </label>
+                    </div>
+                    <select name="" id="" class="custom-select col-12 col-sm-8" style="width: 50%;" required>
+                        <div class="d-block">
+                            {% for item in form.author %}
+                            {{item}}
+                            {% endfor %}
+                        </div>
+                    </select>
+                </div>
+                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
+                    <div class="col-12 col-sm-4 pl-2">
+                        <label for="" class=""> Title of Post : </label>
+                    </div>
+                    <input type="text" name="postName" class="form-control col-12 col-sm-8 p-0" style="width: 50%;" value="{{post.title}}" required>
+                </div>
+                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
+                    <div class="col-12 col-sm-4  pl-2">
+                        <label for="" class=""> Description for Post : </label>
+                    </div>
+                    <textarea type="text" name="postDesc" class="form-control col-12 col-sm-8 py-auto "
+                        style="width: 50%;"  >{{post.text|safe}}</textarea>
+                </div>
+                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
+                    <div class="col-12 col-sm-4  pl-2">
+                        <label for="id_suppDoc" class=""> Select Thumbnail image : </label>
+                    </div>
+                    <input type="file" value="{{post.thumbnail_image}}" class="custom-file-input form-control" id="id_suppDoc" name="suppDoc" style="width: 17%; margin-right: 7px;">
+                    <p style="width: 0;"><a href="{{post.thumbnail_image.url}}">{{post.thumbnail_image.url}}</a></p>
+                </div>
+                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
+                    <div class="col-12 col-sm-4  pl-2">
+                        <label for="id_suppDoc" class=""> Select Feature image : </label>
+                    </div>
+                    <input type="file" value="{{post.feature_image}}" class="custom-file-input form-control" id="id_suppDoc" name="suppDoc" style="width: 17%; margin-right: 7px;">
+                    <p style="width: 0;"><a href="{{post.feature_image.url}}">{{post.feature_image.url}}</a></p>
+                </div>
+                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
+                    <div class="col-12 col-sm-4  pl-2">
+                        <label for="" class=""> Select Category for Post : </label>
+                    </div>
+                    <select name="" id="" class="custom-select col-12 col-sm-8" style="width: 50%;" required>
+                        <div class="d-block">
+                            {% for item in form.category %}
+                            {{item}}
+                            {% endfor %}
+                        </div>
+                    </select>
+                </div>
+                <div class="form-group mb-1 col-md-4 d-flex text-center mt-4" style="margin: auto; width: 50%;">
+                    <div class="col-12 col-sm-4  pl-2">
+                        <label for="" class=""> Select Tags for Post : </label>
+                    </div>
+                    <select name="" id="" class="custom-select col-12 col-sm-8" style="width: 50%;" multiple>
+                        <div class="d-block">
+                            {% for item in form.tag %}
+                            {{item}}
+                            {% endfor %}
+                        </div>
+                    </select>
+                </div>
+                <div class="col-md-12 align-self-center mx-auto mt-3">
+                    <button type="submit"
+                        class="btn-light py-2 px-5" style="font-size: larger; border: 2px solid black; border-radius: 12px; background-color:blue; color:white;">
+                         Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% comment %} <h2>Edit Post</h2>
+<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-secondary">Save</button>
+</form> {% endcomment %}
+{% endblock %}

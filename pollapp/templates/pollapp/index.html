@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %} {% load static %} {% block content %}
+<link
+  rel="stylesheet"
+  class="img"
+  type="text/css"
+  href="{% static 'vvv/style.css' %}"
+  style="height: 100px; width: 100px"
+/>
+{% if latest_question_list %}
+<ul>
+  {% for question in latest_question_list %}
+  <li>
+    <a
+      href="{% url 'pollapp:detail' question.slug %}"
+      style="
+        color: #ef1414;
+        text-decoration: none;
+        font-size: x-large;
+        font-weight: bolder;
+      "
+    >
+      {{ question.question_text }}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No polls are available.</p>
+{% endif %} {% endblock %}
