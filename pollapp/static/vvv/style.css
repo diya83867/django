@@ -1,0 +1,11 @@
+/* ul li a {
+    color: #ef1414;
+    text-decoration: none;
+    font-size: x-large;
+    font-weight: bolder;
+} */
+
+body {
+    background: white url("images/back.gif") no-repeat ;
+    background-size: cover;
+}

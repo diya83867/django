@@ -1,0 +1,164 @@
+#navbarsExample11 a {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 500;
+    font-size: larger;
+}
+body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+.login-form input, .signup-form input {
+    font-size: 1rem;
+}
+.login-form .btn-lg {
+    padding-left: 2.5rem; 
+    padding-right: 2.5rem;
+}
+.signup-form {
+    background-color: #8fc4b7;
+}
+.card-registration {
+    margin-bottom: 11px;
+}
+.card-registration img {
+    border-top-left-radius: .25rem; 
+    border-bottom-left-radius: .25rem; 
+    height:90vh; 
+    width:95%
+}
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap');
+
+.header{
+	margin-bottom: 50px;
+	font-size: 24px;
+}
+.form-wrap{
+	background: rgba(255,255,255,1);
+	width: 100%;
+	max-width: 850px;
+	padding: 50px;
+	margin: 0 auto;
+	position: relative;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+}
+.form-wrap:before{
+	content: "";
+	width: 90%;
+	height: calc(100% + 60px);
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	position: absolute;
+	top: -30px;
+	background: #00bcd9;
+	z-index: -1;
+	opacity: 0.8;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+}
+.form-group{
+	margin-bottom: 25px;
+}
+.form-group > label{
+	display: block;
+	font-size: 18px;	
+	color: #000;
+}
+.custom-control-label{
+	color: #000;
+	font-size: 16px;
+}
+.form-control{
+    margin-top: 5px;
+	background: #ecf0f4;
+	border-color: transparent;
+	font-size: 16px;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+.form-control:focus{
+	border-color: #00bcd9;
+	-webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+}
+textarea.form-control{
+	height: 160px;
+	padding-top: 15px;
+	resize: none;
+}
+
+.btn{
+	padding: .657rem .75rem;
+	font-size: 18px;
+	letter-spacing: 0.050em;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #00bcd9;
+  border-color: #00bcd9;
+}
+
+.btn-primary:hover {
+  color: #00bcd9;
+  background-color: #ffffff;
+  border-color: #00bcd9;
+	-webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  color: #00bcd9;
+  background-color: #ffffff;
+  border-color: #00bcd9;
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  color: #00bcd9;
+  background-color: #ffffff;
+  border-color: #00bcd9;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	-moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+}
+.inwoScrollY { height: 6.5rem !important; overflow-y: scroll; border: 2px solid #d6d6d6; border-radius: 0.5rem;}
+.inwoScrollY > .form-check { font-size: 100%; font-weight: 450; }
