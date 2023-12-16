@@ -52,7 +52,18 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ['name']
     list_filter = ['name']
 
+class EmployeeAdmin(admin.ModelAdmin):
+    search_fields = ['name']
+    list_display = ['name', 'created']
+
+class WorkUpdateAdmin(admin.ModelAdmin):
+    search_fields = ['employee__name', 'details']
+    list_display = ['employee', 'details', 'created']
+    autocomplete_fields = ['employee']
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(WorkUpdate, WorkUpdateAdmin)

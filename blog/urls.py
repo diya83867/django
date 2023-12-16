@@ -19,6 +19,7 @@ urlpatterns = [
     path('tag/', views.tag_list, name='tag_list'),
     path("profile/", views.view_profile, name="view_profile"), 
     path("edit/", views.edit_profile, name="edit_profile"),
+    path("updates/", views.Updates, name="updates"),
     path('csv/',views.getfile),
 
     path('', views.post_list, name='post_list'),

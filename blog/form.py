@@ -36,3 +36,13 @@ class TagForm(forms.ModelForm):
 class LoginForm(forms.Form):
     mail = forms.CharField(label='username or mail')
     password = forms.CharField(widget=forms.PasswordInput)
+
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+class WorkUpdateForm(forms.ModelForm):
+    class Meta:
+        model = WorkUpdate
+        fields = '__all__'

@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -16,6 +17,7 @@ from rest_framework.status import (
 	HTTP_200_OK
 )
 import httplib2
+from datetime import datetime
 from django.conf import settings
 from .seriallizer import *
 from .models import *
@@ -95,6 +97,21 @@ def logoutUser(request):
     return redirect("/")
 
 def post_list(request):
+    if request.method == 'POST':
+        if 'add-employee' in request.POST:
+            form = EmployeeForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Employee Added Successfully.")
+            else:
+                messages.error(request, "Error.")
+        if 'add-work-update' in request.POST:
+            workform = WorkUpdateForm(request.POST)
+            if workform.is_valid():
+                workform.save()
+                messages.success(request, "Work Update Added Successfully.")
+            else:
+                messages.error(request, "Error.")
     if request.user.is_authenticated:
         posts = Post.objects.filter(publish__lte=timezone.now(), author=request.user).order_by("-id")
         return render(request, 'blog/post_list.html', {'posts': posts})
@@ -185,3 +202,20 @@ def post_edit(request, slug):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form, 'post':post})
+
+def Updates(request):
+    if request.GET.get('date'):
+        date = datetime.strptime(request.GET.get('date'), "%Y-%m-%d").date()
+        updates = WorkUpdate.objects.filter(created__date=date).order_by('-id')
+    else:
+        updates = WorkUpdate.objects.all().order_by('-id')
+    paginator = Paginator(updates, 10)
+    page_number = request.GET.get('page',1)
+    count = (int(page_number) * 10) - 10
+    try:
+        list = paginator.page(page_number)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+    return render(request, 'blog/view-updates.html', {'updates':list,'count':count,'page_obj':list})

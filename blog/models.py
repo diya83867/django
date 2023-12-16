@@ -62,3 +62,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+
+class Employee(models.Model):
+    name = models.CharField(max_length=160)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+class WorkUpdate(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.PROTECT, related_name='employees')
+    details = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.employee} - {self.created}'
