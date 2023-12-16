@@ -34,3 +34,13 @@ $("#showPass").click(function() {
         $("#password").attr("type", "password");
     }
 })
+
+$('#employee-name').selectpicker();
+
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+}
+
+var params = new URLSearchParams(window.location.search);
+var date = params.get('date');
+$("#selected-date").attr("value", date);
