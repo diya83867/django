@@ -50,3 +50,28 @@
 	python manage.py migrate --fake
 	python manage.py migrate blog --fake
 
+## Install Requirements 
+1. pip install mysqlclient
+2. pip install celery
+3. pip install redis
+4. sudo apt-get install redis-server
+5. redis-server
+6. redis-cli ping
+7. sudo service redis-server start
+8. sudo apt-get install mysql-server
+9. sudo apt-get install libmysqlclient-dev
+
+## Run Celery
+1. celery -A .celery_redis worker --loglevel=info
+
+## Create user in mysql
+1. sudo mysql;
+2. CREATE USER 'flask'@'localhost' IDENTIFIED BY 'flask';
+3. GRANT ALL PRIVILEGES ON *.* TO 'flask'@'localhost' WITH GRANT OPTION;
+4. FLUSH PRIVILEGES;
+
+## Create database in mysql
+1. create database flask;
+
+## KILL THE RUNNING PROCCESS OF CELERY AND BEATS
+1. kill -9 $(ps aux | grep celery | grep -v grep | awk '{print $2}' | tr '\n'  ' ') > /dev/null 2>&1

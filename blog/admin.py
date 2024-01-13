@@ -1,9 +1,27 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.admin.models import LogEntry
 from django.http import HttpResponse
 from django.urls import reverse
 from .models import *
 import csv
+
+class LogEntryAdmin(admin.ModelAdmin):
+	list_display = ['user', 'content_type', 'action_flag', 'object_id', 'object_repr', 'action_time']
+	search_fields = ['user__username','content_type__model']
+	readonly_fields = ('content_type', 'user', 'action_time', 'object_id', 'object_repr', 'action_flag', 'change_message' )
+
+	def has_delete_permission(self, request, obj=None):
+		return False
+
+	def get_actions(self, request):
+		actions = super(LogEntryAdmin, self).get_actions(request)
+		if 'delete_selected' in actions:
+			del actions['delete_selected']
+		return actions
+
+	def has_add_permission(self,request):
+		return False
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
@@ -26,11 +44,24 @@ class CustomUserAdmin(UserAdmin):
         writer = csv.writer(response)
         writer.writerow(field_names)
         for obj in queryset:
-            row = writer.writerow([getattr(obj, field) for field in field_names])
+            writer.writerow([getattr(obj, field) for field in field_names])
         return response
 
     list_filter = ('company', 'state', 'country')
     search_fields = ('first_name', 'last_name', 'company', 'state', 'country')
+
+    # add_fieldsets = (
+    #     (None, {
+    #         'classes': ('wide', 'extrapretty'),
+    #         'fields': ('first_name', 'last_name', 'email', 'number', 'username', 'password1', 'password2', ),
+    #     }),
+    # )
+    # fieldsets = [
+    #     (None, {'fields': ('email', 'username', 'number', 'first_name', 'last_name', 'password',)}),
+    #     ('Personal info', {'fields': ("parent","company","designation","state","country","email","about","image")}),
+    #     ('Permissions', {'classes': ('collapse', ), 'fields': ('is_active','is_staff','is_superuser','groups','user_permissions')}),
+    #     ('Important dates', {'classes': ('collapse', ), 'fields': ('last_login','date_joined')}),
+    # ]
 
 class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'category')

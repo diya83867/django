@@ -73,7 +73,7 @@
                 <span class="comment-form" style="margin-left: 30px; margin-right: 40px;">
                     <form method="POST" class="post-form ">
                         {% csrf_token %}
-                        {{ form|crispy }}
+                        {% comment %} {{ form|crispy }} {% endcomment %}
                         <button type="submit" class="btn btn-secondary mt-2">Add comment</button>
                     </form>
                 </span>

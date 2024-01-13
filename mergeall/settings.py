@@ -35,18 +35,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites', # must
-    'allauth', # must
-    'allauth.account', # must
-    'allauth.socialaccount', # must
-    'allauth.socialaccount.providers.google', # new
-    'blog',
-    'pollapp',
+    'django.contrib.sites',
+    'easyaudit',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
     'corsheaders',
+    'blog',
+    'pollapp',
 ]
 
 REST_FRAMEWORK = {
@@ -72,6 +73,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
     'blog.middleware.ErrorHandlerMiddleware',
 ]
 
@@ -100,10 +103,14 @@ WSGI_APPLICATION = 'mergeall.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'merge',
+        'HOST': 'localhost',
+        'PORT' : '3306',
+        'USER' : 'nitesh',
+        'PASSWORD' : 'nitesh',
     }
-}
+} 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -128,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
