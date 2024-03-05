@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'channels',
     'easyaudit',
     'allauth',
     'allauth.account',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'blog',
     'pollapp',
+    'channelapp'
 ]
 
 REST_FRAMEWORK = {
@@ -97,6 +99,18 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mergeall.wsgi.application'
+ASGI_APPLICATION = 'mergeall.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
