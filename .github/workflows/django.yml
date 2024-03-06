@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python3 ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
@@ -39,18 +39,17 @@ jobs:
       - name: Run Tests
         run: |
           python3 manage.py test
+
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to EC2
-    steps:
-      - name: ssh -i "ubuntu.pem" ubuntu@ec2-13-235-128-168.ap-south-1.compute.amazonaws.com
-        uses: appleboy/ssh-action@master
-        with:
+  steps:
+      -uses: appleboy/ssh-action@master
+       with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-      - name: Run deployment script
         run: |
           cd /var/www/project/django
           ./.scripts/deploy.sh
