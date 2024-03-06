@@ -1,15 +1,12 @@
 
 name: Django CI
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -37,6 +34,6 @@ jobs:
           -uses: appleboy/ssh-action@master
           -host: ${{ secrets.HOST }}
           -username: ${{ secrets.USERNAME }}
-          =port: ${{ secrets.PORT }}
-          =key: ${{ secrets.SSHKEY }}
-         -script: "cd /home/ubuntu/web/django && ./.scripts/deploy.sh"  
+          -port: ${{ secrets.PORT }}
+          -key: ${{ secrets.SSHKEY }}
+          script: "cd /home/ubuntu/web/django && ./.scripts/deploy.sh"  
