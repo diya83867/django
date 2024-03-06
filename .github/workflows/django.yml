@@ -24,7 +24,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install django-easy-audit          
+      - name: Install Channels
+        run: |
+         pip install django-easy-audit          
       - name: Install Channels
         run: |
           pip install channels
