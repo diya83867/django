@@ -47,5 +47,6 @@ jobs:
           key: ${{ secrets.SSHKEY }}
       - name: Run deployment script
         run: |
+         python3 manage.py test
           cd /var/www/project/django
           ./.scripts/deploy.sh
