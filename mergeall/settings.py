@@ -115,16 +115,37 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
+
+
+
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'merge',
-        'HOST': 'localhost',
-        'PORT' : '3306',
-        'USER' : 'nitesh',
-        'PASSWORD' : 'nitesh',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'test',
+        'HOST': 'database-1.cxqi4eki0k95.ap-south-1.rds.amazonaws.com',
+        'PORT' : '5432',
+        'USER' : 'postgres',
+        'PASSWORD' : 'mysql1234',
     }
 } 
+
+
+
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'merge',
+#        'HOST': 'localhost',
+#        'PORT' : '3306',
+#        'USER' : 'nitesh',
+#        'PASSWORD' : 'nitesh',
+#    }
+#} 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
