@@ -120,16 +120,16 @@ CHANNEL_LAYERS = {
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test',
-        'HOST': 'database-1.cxqi4eki0k95.ap-south-1.rds.amazonaws.com',
-        'PORT' : '5432',
-        'USER' : 'postgres',
-        'PASSWORD' : 'mysql1234',
-    }
-} 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'test',
+#        'HOST': 'database-1.cxqi4eki0k95.ap-south-1.rds.amazonaws.com',
+#        'PORT' : '5432',
+#        'USER' : 'postgres',
+#        'PASSWORD' : 'mysql1234',
+#    }
+#} 
 
 
 
@@ -209,3 +209,15 @@ SITE_ID = 1
 #     prompt='consent')
 
 GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secrets.json'
+
+
+
+
+
+
+
+
+
+
+
+
