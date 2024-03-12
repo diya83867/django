@@ -52,7 +52,6 @@ jobs:
 
       - name: Run deployment script
         run: |
-          cd /var/www/project/django
-          pwd
-          ls -l /var/www/project
+         script: "cd /var/www/miniblog && ./.scripts/deploy.sh"
+
       
