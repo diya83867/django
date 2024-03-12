@@ -54,4 +54,5 @@ jobs:
         run: |
           cd /var/www/project/django
           pwd
+          ls -l /var/www/project
       
