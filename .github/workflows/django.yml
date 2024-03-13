@@ -48,8 +48,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           script: |
-           cd /var/www/projects/django &&
-           /var/www/projects/djang/script
+           cd /var/www/projects/djang/script
            ./deploy.sh
 
     
