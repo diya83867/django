@@ -49,6 +49,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
            cd /var/www/project/django/script
+           chmod +x deploy.sh
            ./deploy.sh
 
     
