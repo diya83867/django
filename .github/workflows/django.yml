@@ -50,7 +50,7 @@ jobs:
 
       - name: Run deployment script
         run: |
-         script: "cd /var/www/project/django && . /.script/deploy.sh"
+         script: "cd /var/www/project/django && . /var/www/project/djangoscript/deploy.sh"
 
                    
          
