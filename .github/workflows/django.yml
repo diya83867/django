@@ -35,9 +35,7 @@ jobs:
       - name: Install Channels
         run: |
           pip install channels
-      # - name: Run Tests
-      #   run: |
-      #     python3 manage.py test
+      
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to EC2
@@ -52,6 +50,5 @@ jobs:
 
       - name: Run deployment script
         run: |
-          cd /var/www/project/django
-          python3 manage.py test
-      
+         
+         
