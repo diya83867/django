@@ -19,3 +19,9 @@ deactivate
 sudo systemctl restart apache2
 echo "Deployment Finished!"
 
+# Reloading Application So New Changes could reflect on website
+pushd django
+touch wsgi.py
+popd
+
+echo "Deployment Finished!"
